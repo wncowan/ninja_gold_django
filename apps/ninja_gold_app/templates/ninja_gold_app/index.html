@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    {% load static %}
+    <!-- The line above tells Django to be ready to listen for static files -->
+    <link rel="stylesheet" href="{% static 'ninja_gold_app/css/main.css' %}" media="screen" title="no title" charset="utf-8">
+    <!-- Put the static files in the static folder inside your app.  Django collects files within all static folders and puts them within a single folder -->
+</head>
+
+<body>
+    <h1 class=''>Ninja Gold</h1>
+    <h2>Gold: {{request.session.gold}}</h2>
+
+    <div class=''>
+        <form action="/process" method="post">
+            {% csrf_token %}
+            <input type="submit" name="name" value="farm">
+            <input type="submit" name="name" value="cave">
+            <input type="submit" name="name" value="house">
+            <input type="submit" name="name" value="casino">
+        </form>
+        <form action="/delete" method="post">
+            {% csrf_token %}
+            <input type="submit" name="name" value="reset">
+        </form>
+    </div>
+    <div>
+        <h2>Activities</h2>
+        {% if request.session.activities %}
+        {% for activity in request.session.activities %}
+        <p>{{activity}}</p>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+
+</html>
